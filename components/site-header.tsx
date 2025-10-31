@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X, ChevronDown } from "@/components/icons"
 
 export function SiteHeader() {
@@ -13,9 +14,15 @@ export function SiteHeader() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">KE</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
+              <Image
+                src="/logo.jpg"
+                alt="KE 258 Lwanda CDC Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
             </div>
             <div className="hidden sm:block">
               <div className="font-sans font-semibold text-foreground">KE 258 Lwanda CDC</div>
