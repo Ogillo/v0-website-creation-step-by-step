@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "@/components/icons"
 
 export function SiteFooter() {
@@ -31,6 +32,15 @@ export function SiteFooter() {
               <div className="bg-background border border-border rounded-lg px-3 py-2">
                 <span className="font-serif text-sm text-muted-foreground">Under</span>
                 <div className="font-sans font-medium text-foreground">FGCK Lwanda</div>
+              </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/compassion-international-logo.png"
+                  alt="Compassion International"
+                  width={120}
+                  height={120}
+                  className="h-20 w-auto object-contain"
+                />
               </div>
             </div>
 
@@ -69,6 +79,9 @@ export function SiteFooter() {
               </Link>
               <Link href="/events" className="font-serif text-muted-foreground hover:text-primary transition-colors">
                 Events
+              </Link>
+              <Link href="/gallery" className="font-serif text-muted-foreground hover:text-primary transition-colors">
+                Gallery
               </Link>
               <Link href="/reports" className="font-serif text-muted-foreground hover:text-primary transition-colors">
                 Reports

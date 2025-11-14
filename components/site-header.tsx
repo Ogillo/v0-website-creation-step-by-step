@@ -78,6 +78,9 @@ export function SiteHeader() {
             <Link href="/stories" className="font-serif text-foreground hover:text-primary transition-colors">
               Stories
             </Link>
+            <Link href="/gallery" className="font-serif text-foreground hover:text-primary transition-colors">
+              Gallery
+            </Link>
             <Link href="/contact" className="font-serif text-foreground hover:text-primary transition-colors">
               Contact
             </Link>
@@ -120,6 +123,9 @@ export function SiteHeader() {
               </Link>
               <Link href="/stories" className="font-serif text-foreground hover:text-primary">
                 Stories
+              </Link>
+              <Link href="/gallery" className="font-serif text-foreground hover:text-primary">
+                Gallery
               </Link>
               <Link href="/contact" className="font-serif text-foreground hover:text-primary">
                 Contact
