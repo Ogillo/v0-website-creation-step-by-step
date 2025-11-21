@@ -4,15 +4,20 @@ import { StoryCard } from "@/components/ui/story-card"
 import { NewsletterSignup } from "@/components/forms/newsletter-signup"
 import { getSupabase } from "@/lib/supabase/client"
 
-export default async function StoriesPage() {
+export default async function StoriesPage({ searchParams }: { searchParams?: Record<string, string> }) {
+  const page = Number(searchParams?.page || 1)
+  const limit = 9
+  const from = (page - 1) * limit
+  const to = from + limit - 1
   const supabase = getSupabase()
   let data: any[] | null = null
   if (supabase) {
     const res = await supabase
       .from("stories")
-      .select("title, content, story_date, tag, images")
+      .select("title, content, story_date, tag, images, is_published")
+      .eq("is_published", true)
       .order("story_date", { ascending: false })
-      .limit(12)
+      .range(from, to)
     data = res.data
   }
 
@@ -65,11 +70,17 @@ export default async function StoriesPage() {
             ))}
           </div>
 
-          {/* Load More Button */}
-          <div className="text-center mt-12">
-            <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
-              Load More Stories
-            </button>
+          <div className="flex items-center justify-center gap-4 mt-12">
+            {page > 1 && (
+              <a href={`/stories?page=${page - 1}`} className="bg-muted text-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                Previous
+              </a>
+            )}
+            {(data || []).length === limit && (
+              <a href={`/stories?page=${page + 1}`} className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                Next
+              </a>
+            )}
           </div>
         </div>
       </section>
