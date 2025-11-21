@@ -2,8 +2,34 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { StoryCard } from "@/components/ui/story-card"
 import { NewsletterSignup } from "@/components/forms/newsletter-signup"
+import { getSupabase } from "@/lib/supabase/client"
 
-export default function StoriesPage() {
+export default async function StoriesPage() {
+  const supabase = getSupabase()
+  let data: any[] | null = null
+  if (supabase) {
+    const res = await supabase
+      .from("stories")
+      .select("title, content, story_date, tag, images")
+      .order("story_date", { ascending: false })
+      .limit(12)
+    data = res.data
+  }
+
+  const items = (data || []).map((s: any) => {
+    const img = Array.isArray(s.images) && s.images.length > 0 ? s.images[0] : undefined
+    const imageUrl = supabase && img ? supabase.storage.from("gallery").getPublicUrl(img).data.publicUrl : undefined
+    return {
+      title: s.title,
+      excerpt: typeof s.content === "string" ? s.content.slice(0, 160) : "",
+      href: "/stories",
+      date: s.story_date ? new Date(s.story_date).toLocaleDateString() : "",
+      author: undefined,
+      category: s.tag || undefined,
+      imageUrl,
+    }
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -25,65 +51,18 @@ export default function StoriesPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <StoryCard
-              title="From Struggle to Success: Mary's Journey"
-              excerpt="Through the Child Development Program, Mary overcame challenges to become a community leader and role model for other young women in Lwanda."
-              href="/stories/marys-journey"
-              date="December 2024"
-              author="Program Staff"
-              category="Child Development"
-              imageUrl="/young-woman-in-kenya-graduation-ceremony.png"
-            />
-
-            <StoryCard
-              title="Building Stronger Families Through CSI"
-              excerpt="The Child Survival Intervention program helped the Ochieng family access healthcare and nutrition support during their most vulnerable time."
-              href="/stories/ochieng-family"
-              date="November 2024"
-              author="Health Coordinator"
-              category="Child Survival"
-              imageUrl="/mother-and-child-at-health-clinic-in-kenya.png"
-            />
-
-            <StoryCard
-              title="Youth Leadership in Action"
-              excerpt="Former program participants are now leading community initiatives and mentoring the next generation of leaders in Lwanda."
-              href="/stories/youth-leadership"
-              date="October 2024"
-              author="Youth Coordinator"
-              category="Youth Development"
-              imageUrl="/young-adults-leading-community-meeting-in-kenya.png"
-            />
-
-            <StoryCard
-              title="A Mother's Gratitude: Sarah's Story"
-              excerpt="Sarah shares how the Child Survival program supported her through pregnancy and helped her baby thrive in the crucial early months."
-              href="/stories/sarahs-story"
-              date="September 2024"
-              author="CSI Team"
-              category="Child Survival"
-              imageUrl="/mother-holding-healthy-baby-in-kenya-clinic.png"
-            />
-
-            <StoryCard
-              title="Education Opens Doors: James's Achievement"
-              excerpt="With sponsorship support, James excelled in his studies and is now pursuing higher education to become a teacher in his community."
-              href="/stories/james-achievement"
-              date="August 2024"
-              author="Education Coordinator"
-              category="Child Development"
-              imageUrl="/young-man-with-books-in-kenya-school.png"
-            />
-
-            <StoryCard
-              title="Community Garden Brings Hope"
-              excerpt="How our nutrition program's community garden is providing fresh food and teaching valuable skills to families in Lwanda."
-              href="/stories/community-garden"
-              date="July 2024"
-              author="Nutrition Team"
-              category="Community Impact"
-              imageUrl="/community-garden-with-vegetables-in-kenya.png"
-            />
+            {items.map((item, i) => (
+              <StoryCard
+                key={i}
+                title={item.title}
+                excerpt={item.excerpt}
+                href={item.href}
+                date={item.date}
+                author={item.author}
+                category={item.category}
+                imageUrl={item.imageUrl}
+              />
+            ))}
           </div>
 
           {/* Load More Button */}

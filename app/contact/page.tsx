@@ -1,10 +1,48 @@
+"use client"
+import { useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { HeroSection } from "@/components/sections/hero-section"
 import { CtaBanner } from "@/components/sections/cta-banner"
 import { Mail, Phone, MapPin, Clock } from "lucide-react"
+import { getSupabase } from "@/lib/supabase/client"
 
 export default function ContactPage() {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [subject, setSubject] = useState("")
+  const [message, setMessage] = useState("")
+  const [submitting, setSubmitting] = useState(false)
+  const [status, setStatus] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setStatus(null)
+    const supabase = getSupabase()
+    if (!supabase) {
+      setStatus("Configuration error. Please try again later.")
+      setSubmitting(false)
+      return
+    }
+    const { error } = await supabase.from("contact_messages").insert({
+      name,
+      email,
+      subject,
+      message,
+    })
+    if (error) {
+      setStatus("Failed to send. Please try again.")
+    } else {
+      setStatus("Message sent successfully.")
+      setName("")
+      setEmail("")
+      setSubject("")
+      setMessage("")
+    }
+    setSubmitting(false)
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -69,13 +107,15 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="bg-card border border-border rounded-lg p-8">
               <h3 className="font-sans text-2xl font-semibold text-foreground mb-6">Send us a Message</h3>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label className="block font-sans font-medium text-foreground mb-2">Name</label>
                   <input
                     type="text"
                     placeholder="Your Name"
                     className="w-full p-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-ring"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div>
@@ -84,6 +124,8 @@ export default function ContactPage() {
                     type="email"
                     placeholder="your@email.com"
                     className="w-full p-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-ring"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
@@ -92,6 +134,8 @@ export default function ContactPage() {
                     type="text"
                     placeholder="How can we help?"
                     className="w-full p-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-ring"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
                   />
                 </div>
                 <div>
@@ -100,11 +144,17 @@ export default function ContactPage() {
                     placeholder="Your message..."
                     rows={5}
                     className="w-full p-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-ring"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                   />
                 </div>
-                <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-sans font-semibold hover:opacity-90 transition-opacity">
-                  Send Message
+                <button
+                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-sans font-semibold hover:opacity-90 transition-opacity"
+                  disabled={submitting}
+                >
+                  {submitting ? "Sending..." : "Send Message"}
                 </button>
+                {status && <p className="text-center font-serif text-sm text-muted-foreground">{status}</p>}
               </form>
             </div>
           </div>

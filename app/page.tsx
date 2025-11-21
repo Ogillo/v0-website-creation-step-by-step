@@ -7,8 +7,33 @@ import { ProgramCard } from "@/components/ui/program-card"
 import { StatCard } from "@/components/ui/stat-card"
 import { StoryCard } from "@/components/ui/story-card"
 import { Heart, Users, GraduationCap, Baby, Calendar, TrendingUp } from "@/components/icons"
+import { getSupabase } from "@/lib/supabase/client"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = getSupabase()
+  let data: any[] | null = null
+  if (supabase) {
+    const res = await supabase
+      .from("stories")
+      .select("title, content, story_date, tag, images")
+      .order("story_date", { ascending: false })
+      .limit(3)
+    data = res.data
+  }
+
+  const stories = (data || []).map((s: any) => {
+    const img = Array.isArray(s.images) && s.images.length > 0 ? s.images[0] : undefined
+    const imageUrl = supabase && img ? supabase.storage.from("gallery").getPublicUrl(img).data.publicUrl : undefined
+    return {
+      title: s.title,
+      excerpt: typeof s.content === "string" ? s.content.slice(0, 160) : "",
+      href: "/stories",
+      date: s.story_date ? new Date(s.story_date).toLocaleDateString() : "",
+      category: s.tag || undefined,
+      imageUrl,
+    }
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -109,30 +134,17 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <StoryCard
-              title="From Struggle to Success: Mary's Journey"
-              excerpt="Through the Child Development Program, Mary overcame challenges to become a community leader and role model for other young women."
-              href="/stories/marys-journey"
-              date="December 2024"
-              category="Child Development"
-              imageUrl="/young-woman-in-kenya-graduation-ceremony.png"
-            />
-            <StoryCard
-              title="Building Stronger Families Through CSI"
-              excerpt="The Child Survival Intervention program helped the Ochieng family access healthcare and nutrition support during their most vulnerable time."
-              href="/stories/ochieng-family"
-              date="November 2024"
-              category="Child Survival"
-              imageUrl="/mother-and-child-at-health-clinic-in-kenya.png"
-            />
-            <StoryCard
-              title="Youth Leadership in Action"
-              excerpt="Former program participants are now leading community initiatives and mentoring the next generation of leaders."
-              href="/stories/youth-leadership"
-              date="October 2024"
-              category="Youth Development"
-              imageUrl="/young-adults-leading-community-meeting-in-kenya.png"
-            />
+            {stories.map((s, i) => (
+              <StoryCard
+                key={i}
+                title={s.title}
+                excerpt={s.excerpt}
+                href={s.href}
+                date={s.date}
+                category={s.category}
+                imageUrl={s.imageUrl}
+              />
+            ))}
           </div>
 
           <div className="text-center mt-12">
