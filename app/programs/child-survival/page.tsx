@@ -171,55 +171,54 @@ export default function ChildSurvivalPage() {
             <div className="bg-background border border-border rounded-lg p-8">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-6"></div>
               <blockquote className="font-serif text-lg text-muted-foreground mb-6 italic">
-                "When I was pregnant with my first child, I was scared and didn't know what to expect. The CSI program
-                connected me with a community health worker who guided me through my pregnancy and taught me how to care
-                for my baby. Now my daughter is healthy and thriving, and I'm helping other mothers in our community."
+                "Before joining the program, I struggled to provide nutritious meals for my children. Through the
+                education and support I received, my baby is now healthy and thriving. I've also learned how to start a
+                small kitchen garden to sustain my family."
               </blockquote>
-              <cite className="font-sans font-semibold text-foreground">- Sarah, CSI Program Participant</cite>
+              <cite className="font-sans font-semibold text-foreground">- Sarah, Program Participant</cite>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-24">
+      {/* Ways to Help */}
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-4">How You Can Help</h2>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">How You Can Help</h2>
             <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
-              There are many ways to support our Child Survival Intervention program and help give children the best
-              start in life.
+              Your support can save lives and give children a healthy start.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
+            <div className="bg-card border border-border rounded-lg p-6 text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Heart className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-4">Monthly Giving</h3>
+              <h3 className="font-sans text-xl font-semibold text-foreground mb-4">Donate Supplies</h3>
               <p className="font-serif text-muted-foreground mb-6">
-                Support ongoing healthcare and nutrition programs with a monthly donation.
+                Help provide essential items like diapers, nutritional supplements, and hygiene kits.
               </p>
-              <Link href="/get-involved" className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
-                Give Monthly
+              <Link href="/donate" className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                Donate Now
               </Link>
             </div>
 
-            <div className="text-center">
+            <div className="bg-card border border-border rounded-lg p-6 text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-8 h-8 text-secondary" />
               </div>
               <h3 className="font-sans text-xl font-semibold text-foreground mb-4">Volunteer</h3>
               <p className="font-serif text-muted-foreground mb-6">
-                Join our team as a community health worker or program assistant.
+                Join us in supporting mothers and organizing community health days.
               </p>
               <Link href="/get-involved" className="bg-secondary text-secondary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
-                Volunteer
+                Get Involved
               </Link>
             </div>
 
-            <div className="text-center">
+            <div className="bg-card border border-border rounded-lg p-6 text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Stethoscope className="w-8 h-8 text-primary" />
               </div>
@@ -236,8 +235,8 @@ export default function ChildSurvivalPage() {
       </section>
 
       <CtaBanner
-        title="Support Child Survival"
-        description="Help us give every child the healthy start they deserve. Your support provides critical healthcare, nutrition, and early development services."
+        title="Help Give a Child a Healthy Start"
+        description="Your donation supports critical health services, nutrition, and care for mothers and babies in our community."
         primaryCta={{ text: "Donate Now", href: "/donate" }}
         variant="primary"
       />

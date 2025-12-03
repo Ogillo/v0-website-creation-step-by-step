@@ -56,7 +56,7 @@ export default async function HomePage() {
         description="Through faith-based programs in partnership with Compassion International and FGCK, we're raising a God-fearing generation equipped to break the cycle of poverty."
         primaryCta={{ text: "Sponsor a Child", href: "/programs/sponsorship" }}
         secondaryCta={{ text: "Learn Our Story", href: "/about" }}
-        backgroundImage={heroImageUrl}
+        backgroundImage="https://ycqlttfhhcywpeagiabg.supabase.co/storage/v1/object/public/hero/hero_image.jpg"
       />
 
       {/* Impact Statistics */}

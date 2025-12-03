@@ -30,7 +30,7 @@ export function CtaBanner({ title, description, primaryCta, secondaryCta, varian
           <p className="font-serif text-lg mb-8 opacity-90">{description}</p>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <Button asChild className="btn-primary">
+            <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-6 text-lg shadow-lg hover:scale-105 transition-transform">
               <Link href={primaryCta.href || "#sponsor"}>{primaryCta.text}</Link>
             </Button>
           </div>

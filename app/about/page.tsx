@@ -105,18 +105,18 @@ export default async function AboutPage() {
             </div>
              <div className="bg-card rounded-lg p-6 text-center">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-4"></div>
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">{"Kevin Okello Omondi"}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{"Child Survival Program Implementer"}</p>
+              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">{"MOses Ojwang'"}</h3>
+              <p className="text-sm text-muted-foreground mb-4">{"Project Accountant"}</p>
             </div>
              <div className="bg-card rounded-lg p-6 text-center">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-4"></div>
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">{"Winnie Atieno Otieno"}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{"Health Specialist"}</p>
+              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">{"Rev. Samson Otare"}</h3>
+              <p className="text-sm text-muted-foreground mb-4">{"Project Patron/Pastor"}</p>
             </div>
              <div className="bg-card rounded-lg p-6 text-center">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-4"></div>
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">{"Kennedy Ochieng"}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{"Accountant"}</p>
+              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">{"Magaret Christine"}</h3>
+              <p className="text-sm text-muted-foreground mb-4">{"Project Social Worker"}</p>
             </div>
           </div>
         </div>
