@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Mail } from "@/components/icons"
+import { Mail, Check } from "@/components/icons"
 
 export function NewsletterSignup() {
   const [email, setEmail] = useState("")
@@ -31,8 +31,9 @@ export function NewsletterSignup() {
           </p>
 
           {isSubmitted ? (
-            <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-              <p className="font-serif text-primary">Thank you for subscribing! Check your email to confirm.</p>
+            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-[16px] p-4 justify-center">
+              <Check className="w-5 h-5 text-green-600" />
+              <p className="font-serif text-green-700">Thank you for subscribing! Check your email to confirm.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
@@ -41,7 +42,7 @@ export function NewsletterSignup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 border border-border rounded-lg bg-input focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex-1 px-4 py-3 border border-border rounded-[10px] bg-input focus:outline-none focus:ring-2 focus:ring-ring"
                 required
               />
               <Button type="submit" className="bg-primary text-primary-foreground">

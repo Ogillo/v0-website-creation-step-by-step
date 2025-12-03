@@ -19,81 +19,93 @@ export default function ProgramsPage() {
       />
 
       {/* Program Overview Stats */}
-      <section className="py-16 bg-muted">
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">Program Impact</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Program Impact</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               See how our three core programs work together to create lasting transformation in our community.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <StatCard
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 md:col-span-4">
+              <StatCard
               value="0-5"
               label="Child Survival"
               description="Supporting mothers and babies through critical early years"
               icon={<Baby className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+              />
+            </div>
+            <div className="col-span-12 md:col-span-4">
+              <StatCard
               value="3-18"
               label="Child Development"
               description="Comprehensive education and spiritual growth"
               icon={<GraduationCap className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+              />
+            </div>
+            <div className="col-span-12 md:col-span-4">
+              <StatCard
               value="18+"
               label="Youth Development"
               description="Leadership training and vocational skills"
               icon={<TrendingUp className="w-6 h-6 text-primary" />}
-            />
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Detailed Program Cards */}
-      <section className="py-16">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">Our Three Core Programs</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Our Three Core Programs</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Each program is designed to meet specific developmental needs while working together to create
               comprehensive support for children and families.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <ProgramCard
+          <div className="grid grid-cols-12 gap-8">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
+              <ProgramCard
               title="Child Survival Intervention"
               description="Supporting mothers and children from pregnancy through age 5 with healthcare, nutrition, early childhood development, and family support services."
               href="/programs/child-survival"
               icon={<Baby className="w-6 h-6 text-primary" />}
               stats="Ages 0-5 • Health & Nutrition Focus • Family Support"
-            />
-            <ProgramCard
+              />
+            </div>
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
+              <ProgramCard
               title="Child Development through Sponsorship"
               description="Comprehensive development for children ages 3-18 through education, spiritual growth, life skills training, and community engagement."
               href="/programs/sponsorship"
               icon={<GraduationCap className="w-6 h-6 text-primary" />}
               stats="Ages 3-18 • Education & Spiritual Growth • Sponsorship Model"
-            />
-            <ProgramCard
+              />
+            </div>
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
+              <ProgramCard
               title="Youth Development"
               description="Empowering young adults with vocational training, leadership skills, entrepreneurship opportunities, and community service projects."
               href="/programs/youth-development"
               icon={<TrendingUp className="w-6 h-6 text-primary" />}
               stats="Ages 18+ • Leadership & Skills Training • Community Impact"
-            />
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* How Programs Work Together */}
-      <section className="py-16 bg-card">
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">A Comprehensive Approach</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">A Comprehensive Approach</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Our programs are designed to work together, creating a seamless journey of support from birth through
               young adulthood.
             </p>

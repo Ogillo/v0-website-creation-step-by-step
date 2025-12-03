@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, X, ChevronDown } from "@/components/icons"
@@ -8,9 +9,10 @@ import { Menu, X, ChevronDown } from "@/components/icons"
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isProgramsOpen, setIsProgramsOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
-    <header className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/60 shadow-sm border-b border-border">
+    <header className="fixed top-0 w-full z-50 bg-white shadow-sm border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -26,16 +28,16 @@ export function SiteHeader() {
             </div>
             <div className="hidden sm:block">
               <div className="font-sans font-semibold text-foreground">KE 258 Lwanda CDC</div>
-              <div className="font-serif text-xs text-muted-foreground">Child Development Centre</div>
+              <div className="font-serif text-xs text-muted-foreground"></div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-4">
-            <Link href="/" className="px-4 py-2 font-serif text-foreground hover:text-primary transition-colors">
+          <nav className="hidden md:flex items-center space-x-2">
+            <Link href="/" className={`px-4 py-2 font-serif text-foreground hover:text-primary transition-colors ${pathname === "/" ? "border-b-2 border-primary" : ""}`}>
               Home
             </Link>
-            <Link href="/about" className="px-4 py-2 font-serif text-foreground hover:text-primary transition-colors">
+            <Link href="/about" className={`px-4 py-2 font-serif text-foreground hover:text-primary transition-colors ${pathname?.startsWith("/about") ? "border-b-2 border-primary" : ""}`}>
               About
             </Link>
 
@@ -49,22 +51,22 @@ export function SiteHeader() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {isProgramsOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-card border border-border rounded-lg shadow-lg py-2">
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-border rounded-[12px] shadow-xl py-2">
                   <Link
                     href="/programs/child-survival"
-                    className="block px-4 py-2 font-serif text-sm text-foreground hover:bg-muted"
+                    className="block px-4 py-2 font-serif text-sm text-foreground hover:bg-muted rounded-[10px] mx-2"
                   >
                     Child Survival Intervention
                   </Link>
                   <Link
                     href="/programs/sponsorship"
-                    className="block px-4 py-2 font-serif text-sm text-foreground hover:bg-muted"
+                    className="block px-4 py-2 font-serif text-sm text-foreground hover:bg-muted rounded-[10px] mx-2"
                   >
                     Child Development through Sponsorship
                   </Link>
                   <Link
                     href="/programs/youth-development"
-                    className="block px-4 py-2 font-serif text-sm text-foreground hover:bg-muted"
+                    className="block px-4 py-2 font-serif text-sm text-foreground hover:bg-muted rounded-[10px] mx-2"
                   >
                     Youth Development
                   </Link>
@@ -72,16 +74,16 @@ export function SiteHeader() {
               )}
             </div>
 
-            <Link href="/get-involved" className="px-4 py-2 font-serif text-foreground hover:text-primary transition-colors">
+            <Link href="/get-involved" className={`px-4 py-2 font-serif text-foreground hover:text-primary transition-colors ${pathname?.startsWith("/get-involved") ? "border-b-2 border-primary" : ""}`}>
               Get Involved
             </Link>
-            <Link href="/stories" className="px-4 py-2 font-serif text-foreground hover:text-primary transition-colors">
+            <Link href="/stories" className={`px-4 py-2 font-serif text-foreground hover:text-primary transition-colors ${pathname?.startsWith("/stories") ? "border-b-2 border-primary" : ""}`}>
               Stories
             </Link>
-            <Link href="/gallery" className="px-4 py-2 font-serif text-foreground hover:text-primary transition-colors">
+            <Link href="/gallery" className={`px-4 py-2 font-serif text-foreground hover:text-primary transition-colors ${pathname?.startsWith("/gallery") ? "border-b-2 border-primary" : ""}`}>
               Gallery
             </Link>
-            <Link href="/contact" className="px-4 py-2 font-serif text-foreground hover:text-primary transition-colors">
+            <Link href="/contact" className={`px-4 py-2 font-serif text-foreground hover:text-primary transition-colors ${pathname?.startsWith("/contact") ? "border-b-2 border-primary" : ""}`}>
               Contact
             </Link>
           </nav>
@@ -107,31 +109,34 @@ export function SiteHeader() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-fadeIn">
-            <nav className="flex flex-col space-y-4">
-              <Link href="/" className="font-serif text-foreground hover:text-primary">
-                Home
-              </Link>
-              <Link href="/about" className="font-serif text-foreground hover:text-primary">
-                About
-              </Link>
-              <Link href="/programs" className="font-serif text-foreground hover:text-primary">
-                Programs
-              </Link>
-              <Link href="/get-involved" className="font-serif text-foreground hover:text-primary">
-                Get Involved
-              </Link>
-              <Link href="/stories" className="font-serif text-foreground hover:text-primary">
-                Stories
-              </Link>
-              <Link href="/gallery" className="font-serif text-foreground hover:text-primary">
-                Gallery
-              </Link>
-              <Link href="/contact" className="font-serif text-foreground hover:text-primary">
-                Contact
-              </Link>
-            </nav>
-          </div>
+          <>
+            <div className="fixed inset-0 bg-black/60" onClick={() => setIsMenuOpen(false)} />
+            <div className="fixed top-0 right-0 h-full w-80 bg-white shadow-xl animate-slideInRight">
+              <nav className="flex flex-col gap-4 p-6">
+                <Link href="/" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Home
+                </Link>
+                <Link href="/about" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  About
+                </Link>
+                <Link href="/programs" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Programs
+                </Link>
+                <Link href="/get-involved" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Get Involved
+                </Link>
+                <Link href="/stories" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Stories
+                </Link>
+                <Link href="/gallery" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Gallery
+                </Link>
+                <Link href="/contact" className="font-serif text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Contact
+                </Link>
+              </nav>
+            </div>
+          </>
         )}
       </div>
     </header>

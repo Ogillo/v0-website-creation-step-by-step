@@ -8,12 +8,19 @@ interface ProgramCardProps {
   href: string
   icon?: React.ReactNode
   stats?: string
+  coverImage?: string
 }
 
-export function ProgramCard({ title, description, href, icon, stats }: ProgramCardProps) {
+export function ProgramCard({ title, description, href, icon, stats, coverImage }: ProgramCardProps) {
   return (
-    <div className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
-      {icon && <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">{icon}</div>}
+    <div className="bg-card border border-border rounded-[16px] p-6 hover:shadow-lg transition-shadow">
+      {coverImage ? (
+        <div className="mb-4">
+          <img src={coverImage} alt={title} className="w-full h-40 object-cover rounded-[12px]" />
+        </div>
+      ) : icon ? (
+        <div className="w-12 h-12 bg-primary/10 rounded-[12px] flex items-center justify-center mb-4">{icon}</div>
+      ) : null}
 
       <h3 className="font-sans text-xl font-semibold text-foreground mb-3">{title}</h3>
       <p className="font-serif text-muted-foreground mb-4">{description}</p>
@@ -24,12 +31,8 @@ export function ProgramCard({ title, description, href, icon, stats }: ProgramCa
         </div>
       )}
 
-      <Link
-        href={href}
-        className="inline-flex items-center space-x-2 text-primary hover:text-primary/80 transition-colors"
-      >
-        <span className="font-serif font-medium">Learn More</span>
-        <ArrowRight className="w-4 h-4" />
+      <Link href={href} className="inline-flex items-center space-x-2 text-secondary hover:text-secondary/80 transition-colors">
+        <span className="font-serif font-medium">Learn more →</span>
       </Link>
     </div>
   )

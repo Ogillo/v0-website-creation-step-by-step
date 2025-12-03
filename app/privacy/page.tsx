@@ -6,12 +6,12 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        <h1 className="font-sans text-4xl font-bold text-foreground mb-8">Privacy Policy</h1>
+      <div className="container mx-auto px-4 py-24 max-w-[680px]">
+        <h1 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8">Privacy Policy</h1>
 
         <div className="prose prose-invert max-w-none space-y-6">
           <section>
-            <h2 className="font-sans text-2xl font-bold text-foreground mb-4">1. Introduction</h2>
+            <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">1. Introduction</h2>
             <p className="font-serif text-muted-foreground">
               KE 258 Lwanda Child Development Centre ("we," "us," "our," or "Organization") is committed to protecting
               your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-sans text-2xl font-bold text-foreground mb-4">2. Information We Collect</h2>
+            <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">2. Information We Collect</h2>
             <p className="font-serif text-muted-foreground mb-4">
               We may collect information about you in a variety of ways. The information we may collect on the Site
               includes:
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-sans text-2xl font-bold text-foreground mb-4">3. Use of Your Information</h2>
+            <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">3. Use of Your Information</h2>
             <p className="font-serif text-muted-foreground mb-4">
               Having accurate information about you permits us to provide you with a smooth, efficient, and customized
               experience. Specifically, we may use information collected about you via the Site to:
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-sans text-2xl font-bold text-foreground mb-4">4. Disclosure of Your Information</h2>
+            <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">4. Disclosure of Your Information</h2>
             <p className="font-serif text-muted-foreground">
               We do not sell, trade, or rent your personal information to third parties. We may share your information
               only with trusted partners who assist us in operating our website and conducting our business, subject to
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-sans text-2xl font-bold text-foreground mb-4">5. Security of Your Information</h2>
+            <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">5. Security of Your Information</h2>
             <p className="font-serif text-muted-foreground">
               We use administrative, technical, and physical security measures to protect your personal information.
               However, no method of transmission over the Internet or method of electronic storage is 100% secure.
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-sans text-2xl font-bold text-foreground mb-4">6. Contact Us</h2>
+            <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">6. Contact Us</h2>
             <p className="font-serif text-muted-foreground">
               If you have questions or comments about this Privacy Policy, please contact us at{" "}
               {"{privacy@ke258lwanda.org}"} or call {"{+254 XXX XXX XXX}"}.

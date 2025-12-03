@@ -1,195 +1,165 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Image as ImageIcon, Video, Search, Play } from "@/components/icons"
-import { getSupabase } from "@/lib/supabase/client"
+import { getSupabaseBrowser } from "@/lib/supabase/client"
+import { Loader2, Image as ImageIcon } from "lucide-react"
+
+type GalleryItem = { title: string; url: string; path: string; alt: string }
+
+const CATEGORIES = [
+  { key: "education", label: "Education", folder: "education" },
+  { key: "sponsorship", label: "Sponsorship", folder: "sponsorship" },
+  { key: "communitywork", label: "Community Work", folder: "community_work" },
+  { key: "celebration", label: "Celebrations", folder: "celebration" },
+]
 
 export default function Gallery() {
-  const [selectedMedia, setSelectedMedia] = useState<any>(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [items, setItems] = useState<{ title: string; url: string; path: string }[]>([])
-  const [loading, setLoading] = useState(true)
+  const [selectedMedia, setSelectedMedia] = useState<GalleryItem | null>(null)
+  const [activeCategory, setActiveCategory] = useState<string>(CATEGORIES[0].key)
+  const [imagesByCat, setImagesByCat] = useState<Record<string, GalleryItem[]>>({})
+  const [loadingByCat, setLoadingByCat] = useState<Record<string, boolean>>({})
+  const [errorByCat, setErrorByCat] = useState<Record<string, string | null>>({})
+
+  const fetchCategory = async (catKey: string, folder: string) => {
+    if (imagesByCat[catKey]?.length) return // Already loaded
+
+    setLoadingByCat((prev) => ({ ...prev, [catKey]: true }))
+    setErrorByCat((prev) => ({ ...prev, [catKey]: null }))
+    try {
+      const supabase = getSupabaseBrowser()
+      const bucket = "gallery" // User specified "gallery" bucket
+      
+      // Recursive fetch to get images in folder
+      const { data, error } = await supabase.storage.from(bucket).list(folder, { 
+        limit: 100, 
+        sortBy: { column: 'name', order: 'desc' } 
+      })
+      
+      if (error) throw error
+      
+      const mapped: GalleryItem[] = (data || [])
+        .filter((f) => f.name && /\.(png|jpe?g|webp|gif|svg)$/i.test(f.name)) // Filter images
+        .map((f) => {
+          const path = `${folder}/${f.name}`
+          const url = supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl
+          return { 
+            title: f.name, 
+            url, 
+            path, 
+            alt: `${CATEGORIES.find(c => c.key === catKey)?.label} - ${f.name}` 
+          }
+        })
+      
+      setImagesByCat((prev) => ({ ...prev, [catKey]: mapped }))
+    } catch (err: any) {
+      console.error(err)
+      setErrorByCat((prev) => ({ ...prev, [catKey]: err?.message || "Failed to load images" }))
+      setImagesByCat((prev) => ({ ...prev, [catKey]: [] }))
+    } finally {
+      setLoadingByCat((prev) => ({ ...prev, [catKey]: false }))
+    }
+  }
 
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const supabase = getSupabase()
-        if (!supabase) throw new Error("Supabase not configured")
-        const bucket = process.env.NEXT_PUBLIC_GALLERY_BUCKET || "gallery"
-        const { data, error } = await supabase.storage.from(bucket).list("", { recursive: true })
-        if (error) throw error
-        const mapped = (data || []).filter((f) => f.name).map((f) => {
-          const url = supabase.storage.from(bucket).getPublicUrl(f.name).data.publicUrl
-          return { title: f.name, url, path: f.name }
-        })
-        setItems(mapped)
-      } catch (err) {
-        setItems([])
-      } finally {
-        setLoading(false)
-      }
+    const cat = CATEGORIES.find((c) => c.key === activeCategory)
+    if (cat) {
+      fetchCategory(cat.key, cat.folder)
     }
-    fetchImages()
-  }, [])
-
-  const filteredItems = items.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
-
-  const categories: any[] = []
-
-  const mediaTypes: any[] = []
+  }, [activeCategory])
 
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
-      {/* Hero Section */}
-      <section className="pt-20 pb-12 bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-sans text-4xl md:text-6xl font-bold mb-6 text-foreground">Gallery</h1>
-          <p className="text-xl md:text-2xl font-light max-w-3xl mx-auto text-muted-foreground">
-            Capturing moments of transformation, celebration, and hope in our community development journey.
-          </p>
+      {/* Hero Section for Gallery */}
+      <section className="relative bg-muted py-20 text-center">
+        <div className="container mx-auto px-4">
+            <h1 className="text-4xl font-bold mb-4">Our Gallery</h1>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+                Explore moments captured from our various programs and community activities.
+            </p>
         </div>
       </section>
 
-      {/* Filters and Search */}
-      <section className="py-8 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="space-y-6">
-            {/* Search */}
-            <div className="flex items-center space-x-4 max-w-md mx-auto">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search gallery..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-
-            <div className="text-center text-sm text-muted-foreground">Images load dynamically from Supabase Storage.</div>
-          </div>
+      <div className="container mx-auto px-4 py-12">
+        {/* Category Tabs */}
+        <div className="flex flex-wrap gap-2 justify-center mb-8">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === cat.key
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary/50 hover:bg-secondary text-secondary-foreground"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
         </div>
-      </section>
 
-      {/* Gallery Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          {loading ? (
-            <div className="text-center py-16">
-              <ImageIcon className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Loading gallery...</p>
+        {/* Gallery Grid */}
+        <div className="min-h-[400px]">
+          {loadingByCat[activeCategory] ? (
+            <div className="flex flex-col items-center justify-center h-64">
+              <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+              <p className="text-muted-foreground">Loading images...</p>
             </div>
-          ) : filteredItems.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredItems.map((item) => (
-                <div
-                  key={item.path}
-                  className="group relative aspect-square bg-muted rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                  onClick={() => setSelectedMedia({ type: "image", title: item.title, url: item.url, date: "" })}
+          ) : errorByCat[activeCategory] ? (
+            <div className="flex flex-col items-center justify-center h-64 text-center">
+              <ImageIcon className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Unable to load images</h3>
+              <p className="text-muted-foreground">{errorByCat[activeCategory]}</p>
+              <button 
+                onClick={() => {
+                    const cat = CATEGORIES.find((c) => c.key === activeCategory)
+                    if(cat) fetchCategory(cat.key, cat.folder)
+                }}
+                className="mt-4 text-primary hover:underline"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : imagesByCat[activeCategory]?.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64 text-center">
+              <ImageIcon className="h-12 w-12 text-muted-foreground mb-4" />
+              <p className="text-muted-foreground">No images found in this category.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {imagesByCat[activeCategory]?.map((item) => (
+                <div 
+                    key={item.path} 
+                    className="group relative aspect-square overflow-hidden rounded-lg bg-muted cursor-pointer"
+                    onClick={() => setSelectedMedia(item)}
                 >
-                  {/* Media Preview */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                    <ImageIcon className="h-12 w-12 text-primary" />
-                  </div>
-
-                  {/* Overlay with title and type */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                      <h3 className="font-semibold text-sm line-clamp-2">{item.title}</h3>
-                    </div>
-                  </div>
-
-                  {/* Media type indicator */}
-                  <div className="absolute top-3 right-3">
-                    <ImageIcon className="h-5 w-5 text-white bg-black/50 rounded p-1" />
-                  </div>
+                  <img
+                    src={item.url}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="text-center py-16">
-              <ImageIcon className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-2">No media found</h3>
-              <p className="text-muted-foreground">
-                Try adjusting your search or filters to find what you're looking for.
-              </p>
-            </div>
           )}
         </div>
-      </section>
+      </div>
 
-      {/* Statistics */}
-      <section className="py-16 bg-gradient-to-r from-primary to-secondary text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold font-sans mb-2">500+</div>
-              <div className="text-lg">Photos Captured</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold font-sans mb-2">50+</div>
-              <div className="text-lg">Video Stories</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold font-sans mb-2">15+</div>
-              <div className="text-lg">Years Documented</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold font-sans mb-2">1000+</div>
-              <div className="text-lg">Lives Captured</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Media Viewer Modal */}
       <Dialog open={!!selectedMedia} onOpenChange={() => setSelectedMedia(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh]">
+        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-transparent border-none shadow-none">
           {selectedMedia && (
-            <div className="space-y-4">
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                {selectedMedia.type === "image" ? (
-                  <ImageIcon className="h-16 w-16 text-primary" />
-                ) : (
-                  <div className="text-center space-y-4">
-                    <Video className="h-16 w-16 text-primary mx-auto" />
-                    <Button className="bg-primary hover:bg-primary/90">
-                      <Play className="h-4 w-4 mr-2" />
-                      Play Video
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-sans font-bold">{selectedMedia.title}</h2>
-                  <Badge>{selectedMedia.category.replace("-", " ")}</Badge>
-                </div>
-
-                <p className="text-muted-foreground">{selectedMedia.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {selectedMedia.tags.map((tag: string, index: number) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      #{tag}
-                    </Badge>
-                  ))}
-                </div>
-
-                <p className="text-sm text-muted-foreground">
-                  Captured on {new Date(selectedMedia.date).toLocaleDateString()}
-                </p>
-              </div>
+            <div className="relative flex items-center justify-center h-full w-full">
+              <img
+                src={selectedMedia.url}
+                alt={selectedMedia.alt}
+                className="max-h-[85vh] max-w-full rounded-md shadow-2xl"
+              />
             </div>
           )}
         </DialogContent>

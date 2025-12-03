@@ -18,7 +18,7 @@ interface CtaBannerProps {
 export function CtaBanner({ title, description, primaryCta, secondaryCta, variant = "default" }: CtaBannerProps) {
   const bgClass = {
     default: "bg-card",
-    primary: "bg-primary text-primary-foreground",
+    primary: "bg-gradient-to-r from-secondary to-secondary/70 text-white",
     secondary: "bg-secondary text-secondary-foreground",
   }[variant]
 
@@ -33,11 +33,6 @@ export function CtaBanner({ title, description, primaryCta, secondaryCta, varian
             <Button asChild className="btn-primary">
               <Link href={primaryCta.href || "#sponsor"}>{primaryCta.text}</Link>
             </Button>
-            {secondaryCta && (
-              <Button asChild className="btn-primary">
-                <Link href={secondaryCta.href || "#story"}>{secondaryCta.text}</Link>
-              </Button>
-            )}
           </div>
         </div>
       </div>

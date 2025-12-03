@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 
 interface HeroSectionProps {
   title: string
@@ -25,23 +26,33 @@ export function HeroSection({
   backgroundImage,
 }: HeroSectionProps) {
   return (
-    <section className="relative py-20 lg:py-32 overflow-hidden">
-      {backgroundImage && (
-        <div className="absolute inset-0 z-0">
-          <img src={backgroundImage || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-white/20" />
-        </div>
-      )}
+    <section className="relative py-20 md:py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/30" />
+        {backgroundImage && (
+          <div className="absolute inset-0">
+            <Image
+              src={backgroundImage}
+              alt=""
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
+          </div>
+        )}
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="min-h-[60vh] flex items-center justify-center">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-sans text-4xl md:text-6xl font-bold text-gray-900 mb-6">{title}</h1>
+        <div className="min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center">
+          <div className="max-w-none mx-auto text-center animate-fadeIn">
+            <h1 className="font-sans text-4xl md:text-[64px] font-bold text-white mb-6">{title}</h1>
 
-            <p className="font-serif text-xl md:text-2xl text-gray-900 mb-8">{subtitle}</p>
+            <p className="font-serif text-[20px] text-white mb-8">{subtitle}</p>
 
             {description && (
-              <p className="font-serif text-lg text-gray-900 mb-12 max-w-2xl mx-auto">{description}</p>
+              <p className="font-serif text-lg text-white mb-12 max-w-[680px] mx-auto">{description}</p>
             )}
 
             <div className="flex flex-col md:flex-row gap-4 mt-6 justify-center">

@@ -1,70 +1,40 @@
-import type React from "react"
+"use client"
 import Link from "next/link"
-import { Home, Image, FileText, Settings } from "@/components/icons"
+import { useState } from "react"
+import { AdminSidebar } from "@/components/admin/UI/AdminSidebar"
+import { MobileDrawer } from "@/components/admin/UI/MobileDrawer"
+import { Menu } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
   return (
     <div className="min-h-screen bg-background">
-      {/* Admin Header */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.jpg" alt="KE 258 Logo" className="h-10 w-10" />
-              <div>
-                <div className="font-semibold text-foreground">Admin Panel</div>
-                <div className="text-xs text-muted-foreground">KE 258 Lwanda CDC</div>
-              </div>
-            </Link>
+      <header className="sticky top-0 z-50 border-b bg-card">
+        <div className="flex h-16 items-center justify-between px-4">
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="icon" aria-label="Open navigation" onClick={() => setOpen(true)} className="lg:hidden">
+              <Menu className="h-5 w-5" />
+            </Button>
+            <Link href="/" className="text-sm">← Back to Website</Link>
           </div>
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
-            ← Back to Website
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/admin/gallery" className="btn-secondary">Upload image</Link>
+            <Link href="/admin/content" className="btn-secondary">Create story</Link>
+            <Link href="/admin/content" className="btn-secondary">Create event</Link>
+          </div>
         </div>
       </header>
-
-      <div className="container flex gap-6 py-6">
-        {/* Sidebar Navigation */}
-        <aside className="w-64 shrink-0">
-          <nav className="sticky top-24 space-y-1">
-            <Link
-              href="/admin"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-            >
-              <Home className="h-4 w-4" />
-              Dashboard
-            </Link>
-            <Link
-              href="/admin/images"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-            >
-              <Image className="h-4 w-4" />
-              Image Management
-            </Link>
-            <Link
-              href="/admin/content"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-            >
-              <FileText className="h-4 w-4" />
-              Content Management
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-            >
-              <Settings className="h-4 w-4" />
-              Settings
-            </Link>
-          </nav>
+      <div className="flex">
+        <aside className="hidden lg:block w-64 border-r bg-[#F5F3FF]">
+          <AdminSidebar />
         </aside>
-
-        {/* Main Content */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 p-4">{children}</main>
       </div>
+      <MobileDrawer open={open} onOpenChange={setOpen}>
+        <AdminSidebar onNavigate={() => setOpen(false)} />
+      </MobileDrawer>
     </div>
   )
 }
+

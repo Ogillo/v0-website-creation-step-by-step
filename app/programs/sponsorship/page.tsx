@@ -17,21 +17,21 @@ export default function SponsorshipPage() {
         backgroundImage="/sponsored-children-in-kenya-classroom.png"
       />
 
-      {/* Program Overview */}
-      <section className="py-16">
+      {/* About */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8 text-center">
               About Child Sponsorship
             </h2>
             <div className="prose prose-lg max-w-none">
-              <p className="font-serif text-lg text-muted-foreground mb-6">
+              <p className="font-serif text-lg text-muted-foreground mb-6 max-w-[680px] mx-auto">
                 Our Child Development through Sponsorship Program (CDSP) is the heart of our ministry, connecting
                 vulnerable children with sponsors who provide not just financial support, but love, encouragement, and
                 hope for the future. Through this program, children receive comprehensive support that addresses their
                 physical, emotional, social, and spiritual needs.
               </p>
-              <p className="font-serif text-lg text-muted-foreground">
+              <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
                 Each sponsored child is enrolled in our program from age 3 through 18, receiving education support,
                 healthcare, nutrition, life skills training, and spiritual development in a loving, Christ-centered
                 environment.
@@ -41,51 +41,51 @@ export default function SponsorshipPage() {
         </div>
       </section>
 
-      {/* Program Impact */}
-      <section className="py-16 bg-muted">
+      {/* Impact */}
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl font-bold text-foreground mb-4">Sponsorship Impact</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Sponsorship Impact</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               See how child sponsorship is transforming lives and building hope in our community.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            <StatCard
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="{# Sponsored}"
               label="Children Sponsored"
               description="Currently enrolled in our program"
               icon={<Heart className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+            /></div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="15"
               label="Years of Growth"
               description="Average program participation"
               icon={<GraduationCap className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+            /></div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="98%"
               label="School Completion"
               description="Sponsored children complete primary school"
               icon={<BookOpen className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+            /></div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="{# Countries}"
               label="Sponsor Countries"
               description="Global community of supporters"
               icon={<Globe className="w-6 h-6 text-primary" />}
-            />
+            /></div>
           </div>
         </div>
       </section>
 
-      {/* What Sponsorship Provides */}
-      <section className="py-16">
+      {/* Activities */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">What Sponsorship Provides</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">What Sponsorship Provides</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Child sponsorship goes far beyond meeting basic needs - it provides comprehensive support for holistic
               development.
             </p>
@@ -155,12 +155,12 @@ export default function SponsorshipPage() {
         </div>
       </section>
 
-      {/* How Sponsorship Works */}
-      <section className="py-16 bg-card">
+      {/* Structure */}
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">How Sponsorship Works</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-4">How Sponsorship Works</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Child sponsorship creates a meaningful relationship that transforms both the child and the sponsor.
             </p>
           </div>
@@ -199,11 +199,11 @@ export default function SponsorshipPage() {
         </div>
       </section>
 
-      {/* Success Story */}
-      <section className="py-16">
+      {/* Related Stories */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-8">Sponsorship Success</h2>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8">Sponsorship Success</h2>
             <div className="bg-card border border-border rounded-lg p-8">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-6"></div>
               <blockquote className="font-serif text-lg text-muted-foreground mb-6 italic">
@@ -221,7 +221,6 @@ export default function SponsorshipPage() {
         title="Sponsor a Child Today"
         description="Change a life forever through child sponsorship. For just $38 per month, you can provide a child with education, healthcare, spiritual development, and hope for the future."
         primaryCta={{ text: "Sponsor Now", href: "/donate" }}
-        secondaryCta={{ text: "Learn More", href: "/contact" }}
         variant="primary"
       />
 

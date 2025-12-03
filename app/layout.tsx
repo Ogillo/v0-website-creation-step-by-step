@@ -1,13 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import { Manrope } from "next/font/google"
+import { Inter_Tight, Manrope } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({
+const interTight = Inter_Tight({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-inter-tight",
 })
 
 const manrope = Manrope({
@@ -29,16 +28,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable} antialiased`}>
-      <head>
-        <style>{`
-html {
-  font-family: ${manrope.style.fontFamily};
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-manrope);
-}
-        `}</style>
-      </head>
+    <html lang="en" className={`${interTight.variable} ${manrope.variable} antialiased`}>
+      <head />
       <body>{children}</body>
     </html>
   )

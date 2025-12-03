@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/hero-section"
 import { StatCard } from "@/components/ui/stat-card"
 import { CtaBanner } from "@/components/sections/cta-banner"
 import { Baby, Heart, Stethoscope, Apple, Users, BookOpen } from "lucide-react"
+import Link from "next/link"
 
 export default function ChildSurvivalPage() {
   return (
@@ -17,21 +18,21 @@ export default function ChildSurvivalPage() {
         backgroundImage="/mother-and-baby-in-kenya-health-program.png"
       />
 
-      {/* Program Overview */}
-      <section className="py-16">
+      {/* About */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8 text-center">
               Program Overview
             </h2>
             <div className="prose prose-lg max-w-none">
-              <p className="font-serif text-lg text-muted-foreground mb-6">
+              <p className="font-serif text-lg text-muted-foreground mb-6 max-w-[680px] mx-auto">
                 The Child Survival Intervention (CSI) program focuses on the critical window from pregnancy through age
                 5, when proper nutrition, healthcare, and early childhood development have the greatest impact on a
                 child's future. We work closely with mothers and families to ensure every child has the best possible
                 start in life.
               </p>
-              <p className="font-serif text-lg text-muted-foreground">
+              <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
                 Through partnerships with local health facilities and trained community health workers, we provide
                 comprehensive support that addresses both immediate needs and long-term development goals.
               </p>
@@ -40,52 +41,60 @@ export default function ChildSurvivalPage() {
         </div>
       </section>
 
-      {/* Program Statistics */}
-      <section className="py-16 bg-muted">
+      {/* Impact */}
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl font-bold text-foreground mb-4">Program Impact</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Program Impact</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               See how our Child Survival Intervention program is making a difference in the lives of mothers and
               children.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            <StatCard
-              value="{# Mothers}"
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
+              value="50+"
               label="Mothers Supported"
               description="Receiving prenatal and postnatal care"
               icon={<Heart className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
-              value="{# Children}"
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
+              value="100+"
               label="Children Enrolled"
               description="Ages 0-5 in our program"
               icon={<Baby className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
               value="95%"
               label="Health Improvement"
               description="Children meeting growth milestones"
               icon={<Stethoscope className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
               value="100%"
               label="Nutrition Support"
               description="Families receiving nutrition education"
               icon={<Apple className="w-6 h-6 text-primary" />}
-            />
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Program Components */}
-      <section className="py-16">
+      {/* Activities */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">Program Components</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Program Components</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Our comprehensive approach addresses all aspects of early childhood development and maternal health.
             </p>
           </div>
@@ -154,11 +163,11 @@ export default function ChildSurvivalPage() {
         </div>
       </section>
 
-      {/* Success Story */}
-      <section className="py-16 bg-card">
+      {/* Related Stories */}
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-8">Success Story</h2>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8">Success Story</h2>
             <div className="bg-background border border-border rounded-lg p-8">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-6"></div>
               <blockquote className="font-serif text-lg text-muted-foreground mb-6 italic">
@@ -172,12 +181,12 @@ export default function ChildSurvivalPage() {
         </div>
       </section>
 
-      {/* How to Get Involved */}
-      <section className="py-16">
+      {/* Call to Action */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">How You Can Help</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-4">How You Can Help</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               There are many ways to support our Child Survival Intervention program and help give children the best
               start in life.
             </p>
@@ -192,9 +201,9 @@ export default function ChildSurvivalPage() {
               <p className="font-serif text-muted-foreground mb-6">
                 Support ongoing healthcare and nutrition programs with a monthly donation.
               </p>
-              <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+              <Link href="/get-involved" className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
                 Give Monthly
-              </button>
+              </Link>
             </div>
 
             <div className="text-center">
@@ -205,9 +214,9 @@ export default function ChildSurvivalPage() {
               <p className="font-serif text-muted-foreground mb-6">
                 Join our team as a community health worker or program assistant.
               </p>
-              <button className="bg-secondary text-secondary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+              <Link href="/get-involved" className="bg-secondary text-secondary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
                 Volunteer
-              </button>
+              </Link>
             </div>
 
             <div className="text-center">
@@ -218,9 +227,9 @@ export default function ChildSurvivalPage() {
               <p className="font-serif text-muted-foreground mb-6">
                 Healthcare professionals can provide training and medical expertise.
               </p>
-              <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+              <Link href="/get-involved" className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
                 Learn More
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -230,7 +239,7 @@ export default function ChildSurvivalPage() {
         title="Support Child Survival"
         description="Help us give every child the healthy start they deserve. Your support provides critical healthcare, nutrition, and early development services."
         primaryCta={{ text: "Donate Now", href: "/donate" }}
-        secondaryCta={{ text: "Learn More", href: "/contact" }}
+        variant="primary"
       />
 
       <SiteFooter />

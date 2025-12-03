@@ -2,12 +2,12 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { HeroSection } from "@/components/sections/hero-section"
 import { CtaBanner } from "@/components/sections/cta-banner"
-import { NewsletterSignup } from "@/components/forms/newsletter-signup"
 import { ProgramCard } from "@/components/ui/program-card"
 import { StatCard } from "@/components/ui/stat-card"
 import { StoryCard } from "@/components/ui/story-card"
 import { Heart, Users, GraduationCap, Baby, Calendar, TrendingUp } from "@/components/icons"
 import { getSupabase } from "@/lib/supabase/client"
+import { getHeroImage } from "@/lib/hero"
 
 export default async function HomePage() {
   const supabase = getSupabase()
@@ -15,30 +15,26 @@ export default async function HomePage() {
   if (supabase) {
     const res = await supabase
       .from("stories")
-      .select("title, content, story_date, tag, images")
-      .order("story_date", { ascending: false })
+      .select("title, content, story_date, tag, media_path, status")
+      .or("status.is.null,status.eq.published")
+      .order("story_date", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false })
       .limit(3)
     data = res.data
   }
 
-  const heroBucket = process.env.NEXT_PUBLIC_HERO_BUCKET || "hero"
-  let heroImageUrl: string | undefined = undefined
-  if (supabase) {
-    const searchBases = ["", "ke258", "ke258/hero"]
-    for (const base of searchBases) {
-      const { data: files } = await supabase.storage.from(heroBucket).list(base, { recursive: true })
-      const match = (files || []).find((f: any) => f.name && (f.name === "hero_image" || f.name.startsWith("hero_image.")))
-      if (match) {
-        const path = base ? `${base}/${match.name}` : match.name
-        heroImageUrl = supabase.storage.from(heroBucket).getPublicUrl(path).data.publicUrl
-        break
-      }
-    }
-  }
+  const heroImageUrl = await getHeroImage("home", "/children-playing-in-kenya-community-center.png")
 
   const stories = (data || []).map((s: any) => {
-    const img = Array.isArray(s.images) && s.images.length > 0 ? s.images[0] : undefined
-    const imageUrl = supabase && img ? supabase.storage.from("gallery").getPublicUrl(img).data.publicUrl : undefined
+    const imgPath = typeof s.media_path === "string" ? s.media_path : undefined
+    let imageUrl: string | undefined = undefined
+    if (imgPath) {
+      if (imgPath.startsWith("http")) {
+        imageUrl = imgPath
+      } else if (supabase) {
+        imageUrl = supabase.storage.from("stories").getPublicUrl(imgPath).data.publicUrl
+      }
+    }
     return {
       title: s.title,
       excerpt: typeof s.content === "string" ? s.content.slice(0, 160) : "",
@@ -64,186 +60,118 @@ export default async function HomePage() {
       />
 
       {/* Impact Statistics */}
-      <section className="py-20 bg-muted">
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 text-center mb-8">Our Impact Since 2015</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground text-center mb-6">Our Impact Since 2015</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               See how God is working through our community to transform lives and build hope.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            <StatCard
-              value="{# Children Supported}"
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
+              value="497"
               label="Children Supported"
               description="Through our three core programs"
-              icon={<Heart className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
-              value="9"
-              label="Years of Service"
-              description="Since our founding in 2015"
-              icon={<Calendar className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
-              value="3"
-              label="Core Programs"
-              description="Comprehensive child development"
-              icon={<GraduationCap className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
-              value="100+"
-              label="Families Reached"
-              description="Building stronger communities"
-              icon={<Users className="w-6 h-6 text-primary" />}
-            />
+              icon={<Users className="w-6 h-6" />}
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
+              value="28"
+              label="Mothers & Babies"
+              description="In our Child Survival Program"
+              icon={<Baby className="w-6 h-6" />}
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
+              value="12"
+              label="University Students"
+              description="Currently pursuing higher education"
+              icon={<GraduationCap className="w-6 h-6" />}
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+              <StatCard
+              value="15"
+              label="Youth Leaders"
+              description="Mentoring the next generation"
+              icon={<TrendingUp className="w-6 h-6" />}
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Programs Overview */}
-      <section className="py-20">
+      {/* Core Programs */}
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 text-center mb-8">Our Programs</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
-              Three comprehensive ministries working together to empower children from birth through young adulthood.
+          <div className="text-center mb-16">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground text-center mb-6">Our Core Programs</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
+              We serve children at every stage of development, from the womb through young adulthood.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <ProgramCard
-              title="Child Survival Intervention"
-              description="Supporting mothers and children from pregnancy through age 5 with healthcare, nutrition, and early childhood development."
+              title="Child Survival"
+              description="Providing critical prenatal and postnatal care, nutrition, and support for mothers and babies."
+              imageUrl="/mother-and-child-at-health-clinic-in-kenya.png"
               href="/programs/child-survival"
-              icon={<Baby className="w-6 h-6 text-primary" />}
-              stats="Ages 0-5 • Health & Nutrition Focus"
+              icon={<Baby className="w-6 h-6" />}
             />
             <ProgramCard
-              title="Child Development through Sponsorship"
-              description="Comprehensive development for children ages 3-18 through education, spiritual growth, and life skills training."
+              title="Child Sponsorship"
+              description="Holistic development for children ages 3-18 through education, health care, and discipleship."
+              imageUrl="/children-learning-in-classroom-lwanda-kenya.png"
               href="/programs/sponsorship"
-              icon={<GraduationCap className="w-6 h-6 text-primary" />}
-              stats="Ages 3-18 • Education & Spiritual Growth"
+              icon={<Users className="w-6 h-6" />}
             />
             <ProgramCard
               title="Youth Development"
-              description="Empowering young adults with vocational training, leadership skills, and opportunities for community impact."
+              description="Empowering young adults with leadership skills, vocational training, and higher education."
+              imageUrl="/young-adults-leading-community-meeting-in-kenya.png"
               href="/programs/youth-development"
-              icon={<TrendingUp className="w-6 h-6 text-primary" />}
-              stats="Ages 18+ • Leadership & Skills Training"
+              icon={<GraduationCap className="w-6 h-6" />}
             />
           </div>
         </div>
       </section>
 
       {/* Latest Stories */}
-      <section className="py-20 bg-card">
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 text-center mb-8">Stories of Transformation</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
-              Witness how God is working through our programs to transform lives and build hope in our community.
+          <div className="text-center mb-16">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground text-center mb-6">Latest Stories</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
+              Read about the lives being transformed and the milestones we're celebrating together.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {stories.map((s, i) => (
-              <StoryCard
-                key={i}
-                title={s.title}
-                excerpt={s.excerpt}
-                href={s.href}
-                date={s.date}
-                category={s.category}
-                imageUrl={s.imageUrl}
-              />
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {stories.map((story: any, i: number) => (
+              <StoryCard key={i} {...story} />
             ))}
+            {stories.length === 0 && (
+               <div className="col-span-3 text-center text-muted-foreground">No stories yet.</div>
+            )}
           </div>
 
-          <div className="text-center mt-12">
-            <a href="/stories" className="btn-primary">
-              Read More Stories
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Partnership Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 text-center mb-8">Our Partners</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
-              Working together with trusted organizations to maximize our impact and ensure sustainable change.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-card border border-border rounded-lg p-8 text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-3">Compassion International</h3>
-              <p className="font-serif text-muted-foreground">
-                Our primary partner in child development, providing resources, training, and global support for our
-                programs.
-              </p>
-            </div>
-
-            <div className="bg-card border border-border rounded-lg p-8 text-center">
-              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-secondary" />
-              </div>
-              <h3 className="font-sans text-xl font-semibold text-foreground mb-3">Full Gospel Churches of Kenya</h3>
-              <p className="font-serif text-muted-foreground">
-                Our local church assembly provides spiritual foundation, community connection, and ongoing pastoral
-                support.
-              </p>
-            </div>
+          <div className="text-center">
+            <CtaBanner
+              title="Join Us in Making a Difference"
+              description="Your support can change a child's life forever. Partner with us today."
+              primaryCta={{ text: "Donate Now", href: "/donate" }}
+              secondaryCta={{ text: "Get Involved", href: "/get-involved" }}
+              variant="secondary"
+            />
           </div>
         </div>
       </section>
-
-      {/* Call to Action */}
-      <CtaBanner
-        title="Join Us in Transforming Lives"
-        description="Every child deserves hope, opportunity, and the chance to reach their God-given potential. Your support makes transformation possible."
-        primaryCta={{ text: "Donate Now", href: "/donate" }}
-        secondaryCta={{ text: "Get Involved", href: "/get-involved" }}
-        variant="primary"
-      />
-
-      {/* Newsletter Signup */}
-      <NewsletterSignup />
-
-      <section className="py-20">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 text-center">Reach Out</h2>
-            <p className="font-serif text-muted-foreground">We would love to hear from you. Send us a message.</p>
-          </div>
-          <form className="grid grid-cols-1 gap-4">
-            <div>
-              <label className="block text-sm font-medium" htmlFor="contact-name">Name</label>
-              <input id="contact-name" type="text" className="w-full mt-1 px-4 py-3 border border-border rounded-lg bg-input" aria-label="Name" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium" htmlFor="contact-email">Email</label>
-              <input id="contact-email" type="email" className="w-full mt-1 px-4 py-3 border border-border rounded-lg bg-input" aria-label="Email" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium" htmlFor="contact-message">Message</label>
-              <textarea id="contact-message" rows={5} className="w-full mt-1 px-4 py-3 border border-border rounded-lg bg-input" aria-label="Message" />
-            </div>
-            <div className="text-center">
-              <button type="submit" className="btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </section>
-
       <SiteFooter />
     </div>
   )

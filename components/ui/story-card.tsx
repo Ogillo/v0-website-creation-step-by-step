@@ -13,16 +13,16 @@ interface StoryCardProps {
 
 export function StoryCard({ title, excerpt, href, date, author, imageUrl, category }: StoryCardProps) {
   return (
-    <article className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+    <article className="bg-card border border-border rounded-[16px] overflow-hidden hover:shadow-lg transition-shadow">
       {imageUrl && (
         <div className="bg-muted">
-          <img src={imageUrl || "/placeholder.svg"} alt={title} className="w-full h-64 object-cover rounded-lg" />
+          <img src={imageUrl || "/placeholder.svg"} alt={title} className="w-full h-64 object-cover" />
         </div>
       )}
 
       <div className="p-6">
         {category && (
-          <span className="inline-block bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-medium mb-3">
+          <span className="inline-block bg-primary/10 text-primary px-2 py-1 rounded-[10px] text-xs font-medium mb-3">
             {category}
           </span>
         )}

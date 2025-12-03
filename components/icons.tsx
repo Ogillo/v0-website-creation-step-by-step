@@ -322,6 +322,47 @@ export function Instagram({ className }: { className?: string }) {
   )
 }
 
+export function Tiktok({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 3v6.5c0 2.485-2.015 4.5-4.5 4.5S3 12.985 3 10.5 5.015 6 7.5 6c.517 0 1.012.09 1.47.258" />
+      <path d="M12 6c1.2 1.7 3.1 2.9 5.2 3.2" />
+      <circle cx="8" cy="14" r="2.5" />
+    </svg>
+  )
+}
+
+export function Youtube({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect width="20" height="14" x="2" y="5" rx="3" ry="3" />
+      <polygon points="10 9 16 12 10 15 10 9" />
+    </svg>
+  )
+}
+
 export function Upload({ className }: { className?: string }) {
   return (
     <svg

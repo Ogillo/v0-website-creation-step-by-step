@@ -16,12 +16,12 @@ export default function SafeguardingPage() {
       />
 
       {/* Our Commitment */}
-      <section className="py-16">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="font-sans text-3xl font-bold text-foreground mb-4">Our Safeguarding Commitment</h2>
-              <p className="font-serif text-lg text-muted-foreground">
+              <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-4">Our Safeguarding Commitment</h2>
+              <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
                 We are committed to creating a safe environment where every child can thrive and reach their full
                 potential.
               </p>
@@ -77,10 +77,10 @@ export default function SafeguardingPage() {
       </section>
 
       {/* Key Policies */}
-      <section className="py-16 bg-muted">
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-sans text-3xl font-bold text-foreground mb-12 text-center">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-12 text-center">
               Our Safeguarding Policies
             </h2>
 
@@ -168,24 +168,24 @@ export default function SafeguardingPage() {
       </section>
 
       {/* Reporting Concerns */}
-      <section className="py-16">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-card border border-border rounded-lg p-8">
+            <div className="bg-card border border-border rounded-[16px] p-8">
               <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
                 <AlertCircle className="w-6 h-6 text-secondary" />
               </div>
-              <h2 className="font-sans text-2xl font-bold text-foreground mb-4">Reporting Concerns</h2>
+              <h2 className="font-sans text-2xl font-bold text-foreground mb-4 pt-12">Reporting Concerns</h2>
               <p className="font-serif text-muted-foreground mb-6">
                 If you have concerns about a child's safety or suspect abuse, please report it immediately. All reports
                 are treated confidentially and investigated thoroughly.
               </p>
               <div className="space-y-3">
                 <p className="font-serif text-muted-foreground">
-                  <strong>Email:</strong> {"{safeguarding@ke258lwanda.org}"}
+                  <strong>Email:</strong> {"ke258fgcklwandacdc@gmail.com"}
                 </p>
                 <p className="font-serif text-muted-foreground">
-                  <strong>Phone:</strong> {"{+254 XXX XXX XXX}"}
+                  <strong>Phone:</strong> {"+254 723 783 472"}
                 </p>
                 <p className="font-serif text-muted-foreground">
                   <strong>In-person:</strong> Visit our office in Lwanda

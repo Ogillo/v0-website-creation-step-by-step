@@ -17,20 +17,20 @@ export default function YouthDevelopmentPage() {
         backgroundImage="/young-adults-in-kenya-leadership-training.png"
       />
 
-      {/* Program Overview */}
-      <section className="py-16">
+      {/* About */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8 text-center">
               Empowering the Next Generation
             </h2>
             <div className="prose prose-lg max-w-none">
-              <p className="font-serif text-lg text-muted-foreground mb-6">
+              <p className="font-serif text-lg text-muted-foreground mb-6 max-w-[680px] mx-auto">
                 Our Youth Development Program (YDP) serves as the bridge between childhood and adulthood, equipping
                 young people with the skills, confidence, and opportunities they need to become productive members of
                 society and leaders in their communities.
               </p>
-              <p className="font-serif text-lg text-muted-foreground">
+              <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
                 Many of our youth participants are graduates of our Child Development through Sponsorship Program, and
                 we're proud to see them grow into mentors and role models for the next generation of children in our
                 programs.
@@ -40,51 +40,51 @@ export default function YouthDevelopmentPage() {
         </div>
       </section>
 
-      {/* Program Impact */}
-      <section className="py-16 bg-muted">
+      {/* Impact */}
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl font-bold text-foreground mb-4">Youth Program Impact</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Youth Program Impact</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               See how our Youth Development Program is creating leaders and entrepreneurs in our community.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            <StatCard
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="{# Youth}"
               label="Youth Participants"
               description="Currently in our program"
               icon={<Users className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+            /></div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="85%"
               label="Employment Rate"
               description="Graduates finding meaningful work"
               icon={<Briefcase className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+            /></div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="{# Businesses}"
               label="Businesses Started"
               description="Youth-led enterprises launched"
               icon={<TrendingUp className="w-6 h-6 text-primary" />}
-            />
-            <StatCard
+            /></div>
+            <div className="col-span-12 sm:col-span-6 lg:col-span-3"><StatCard
               value="100%"
               label="Leadership Training"
               description="Participants complete leadership program"
               icon={<Star className="w-6 h-6 text-primary" />}
-            />
+            /></div>
           </div>
         </div>
       </section>
 
-      {/* Program Components */}
-      <section className="py-16">
+      {/* Activities */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">Program Components</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-6">Program Components</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Our comprehensive approach prepares young adults for success in work, leadership, and life.
             </p>
           </div>
@@ -153,12 +153,12 @@ export default function YouthDevelopmentPage() {
         </div>
       </section>
 
-      {/* Success Pathways */}
-      <section className="py-16 bg-card">
+      {/* Impact Pathways */}
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-4">Success Pathways</h2>
-            <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-4">Success Pathways</h2>
+            <p className="font-serif text-lg text-muted-foreground max-w-[680px] mx-auto">
               Our youth graduates go on to make meaningful contributions in various fields and sectors.
             </p>
           </div>
@@ -198,11 +198,11 @@ export default function YouthDevelopmentPage() {
         </div>
       </section>
 
-      {/* Success Story */}
-      <section className="py-16">
+      {/* Related Stories */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground mb-8">Youth Success Story</h2>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold text-foreground mb-8">Youth Success Story</h2>
             <div className="bg-card border border-border rounded-lg p-8">
               <div className="w-20 h-20 bg-muted rounded-full mx-auto mb-6"></div>
               <blockquote className="font-serif text-lg text-muted-foreground mb-6 italic">
@@ -221,7 +221,7 @@ export default function YouthDevelopmentPage() {
         title="Invest in Youth Leadership"
         description="Support our Youth Development Program and help young adults become the leaders and change-makers their communities need."
         primaryCta={{ text: "Support Youth", href: "/donate" }}
-        secondaryCta={{ text: "Volunteer", href: "/get-involved" }}
+        variant="primary"
       />
 
       <SiteFooter />
