@@ -2,18 +2,28 @@ import DashboardShell from "@/components/admin/Dashboard/DashboardShell"
 import StatCard from "@/components/admin/Dashboard/StatCard"
 import Sparkline from "@/components/admin/Dashboard/Sparkline"
 import LatestMessages from "@/components/admin/Dashboard/LatestMessages"
-import { cookies } from "next/headers"
+import { cookies, headers } from "next/headers"
+
+function getBaseUrl() {
+  const h = headers()
+  const host = h.get("x-forwarded-host") || h.get("host") || ""
+  const proto = h.get("x-forwarded-proto") || "https"
+  const envBase = process.env.NEXT_PUBLIC_SITE_URL || ""
+  return envBase || (host ? `${proto}://${host}` : "")
+}
 
 async function getStats() {
   const token = cookies().get("sb-access-token")?.value
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ""}/api/admin/stats`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
+  const base = getBaseUrl()
+  const res = await fetch(`${base}/api/admin/stats`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
   if (!res.ok) return null
   return res.json()
 }
 
 async function getLatest() {
   const token = cookies().get("sb-access-token")?.value
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ""}/api/admin/contact-latest?limit=3`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
+  const base = getBaseUrl()
+  const res = await fetch(`${base}/api/admin/contact-latest?limit=3`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
   if (!res.ok) return []
   return res.json()
 }
