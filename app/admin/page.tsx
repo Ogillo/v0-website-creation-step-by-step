@@ -15,17 +15,25 @@ function getBaseUrl() {
 async function getStats() {
   const token = cookies().get("sb-access-token")?.value
   const base = getBaseUrl()
-  const res = await fetch(`${base}/api/admin/stats`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
-  if (!res.ok) return null
-  return res.json()
+  try {
+    const res = await fetch(`${base}/api/admin/stats`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
 }
 
 async function getLatest() {
   const token = cookies().get("sb-access-token")?.value
   const base = getBaseUrl()
-  const res = await fetch(`${base}/api/admin/contact-latest?limit=3`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
-  if (!res.ok) return []
-  return res.json()
+  try {
+    const res = await fetch(`${base}/api/admin/contact-latest?limit=3`, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : {} })
+    if (!res.ok) return []
+    return res.json()
+  } catch {
+    return []
+  }
 }
 
 export default async function AdminDashboard() {
